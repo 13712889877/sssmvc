@@ -7,7 +7,7 @@
         <selectKey resultType="java.lang.Integer" order="AFTER" keyProperty="customerId">
             SELECT LAST_INSERT_ID()
         </selectKey>
-        insert into ec_customer(code,customerName,customerAddress,customerEmail,customerTel,customerType) values(#{code},#{customerName},#{customerAddress},#{customerEmail},#{customerTel},#{customerType})
+        insert into ec_customer(ec_user_id,customer_name,customer_address,customer_email,customer_tel,customer_type) values(#{ecUserId},#{customerName},#{customerAddress},#{customerEmail},#{customerTel},#{customerType})
     </insert>
     <!-- 删除操作 -->
     <delete id="delete" parameterType="int">
@@ -22,52 +22,52 @@
     </delete>
     <!-- 修改操作 -->
     <update id="update" parameterType="customer">
-        update ec_customer set code=#{code},customerName=#{customerName},customerAddress=#{customerAddress},customerEmail=#{customerEmail},customerTel=#{customerTel},customerType=#{customerType} where customerId=#{customerId}
+        update ec_customer set ec_user_id=#{ecUserId},customer_name=#{customerName},customer_address=#{customerAddress},customer_email=#{customerEmail},customer_tel=#{customerTel},customer_type=#{customerType} where customer_id=#{customerId}
     </update>
     <!--  查询操作-->
     <select id="findById" resultMap="customerMap" parameterType="int">
         select
-        c.customerId,c.code,c.customerName,c.customerAddress,c.customerEmail,c.customerTel,c.customerType
+        c.customer_id,c.ec_user_id,c.customer_name,c.customer_address,c.customer_email,c.customer_tel,c.customer_type
         from
         ec_customer c, ec_user u
         where
-       c.customerId=#{customerId} and c.code=u.id
+       c.customer_id=#{customerId} and c.ec_user-id=u.id
     </select>
     <resultMap type="customer" id="customerMap">
-        <id property="customerId" column="customerId"/>
-        <result property="code" column="code"/>
-        <result property="customerName" column="customerName"/>
-        <result property="customerAddress" column="customerAddress"/>
-        <result property="customerEmail" column="customerEmail"/>
-        <result property="customerTel" column="customerTel"/>
-        <result property="customerType" column="customerType"/>
+        <id property="customerId" column="customer_id"/>
+        <result property="ecUserId" column="ec_user_id"/>
+        <result property="customerName" column="customer_name"/>
+        <result property="customerAddress" column="customer_address"/>
+        <result property="customerEmail" column="customer_email"/>
+        <result property="customerTel" column="customer_tel"/>
+        <result property="customerType" column="customer_type"/>
         <association property="customerGroup" resultMap="com.easycms.entity.CmsCustomerGroup.groupMap"></association>
     </resultMap>
 
     <resultMap type="customer" id="msgCustomerMap">
-        <id property="customerId" column="customerId"/>
-        <result property="customerName" column="customerName"/>
+        <id property="customerId" column="customer_id"/>
+        <result property="customerName" column="customer_name"/>
     </resultMap>
 
     <!-- 查询全部 -->
     <select id="findAll" resultMap="customerMap">
         select
-        c.customerId,c.code,c.customerName,c.customerAddress,c.customerEmail,c.customerTel,c.customerType
+        c.customer_id,c.ec_user_id,c.customer_name,c.customer_address,c.customer_email,c.customer_tel,c.customer_type
         from
         ec_customer c, ec_user u
         where
-       c.code=u.id
+       c.ec_user_id=u.id
     </select>
     <!-- 分页查询 -->
     <select id="findByPage" resultMap="customerMap" parameterType="map">
       select
-        c.customerId,c.code,c.customerName,c.customerAddress,c.customerEmail,c.customerTel,c.customerType
+        c.customer_id,c.ec_user_id,c.customer_name,c.customer_address,c.customer_email,c.customer_tel,c.customer_type
         from
         ec_customer c, ec_user u
         where
-       c.code=u.id
+       c.ec_user_id=u.id
         order by
-        customerId desc
+        customer_id desc
         limit
         #{showPages},#{pageSize}
     </select>
@@ -77,6 +77,6 @@
     </select>
     <!-- 根据用户名获得对象 -->
     <select id="findByName" resultType="customer" parameterType="customer">
-        select * from ec_customer where customerName=#{customerName}
+        select * from ec_customer where customer_name=#{customerName}
     </select>
 </mapper>

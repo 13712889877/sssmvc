@@ -11,6 +11,7 @@ import org.springframework.stereotype.Service;
 
 import javax.annotation.Resource;
 import java.util.HashMap;
+import java.util.List;
 import java.util.Map;
 
 /**
@@ -23,6 +24,8 @@ public class CmsCustomerServiceImpl extends AbstractBaseDao<CmsCustomer, Integer
 
    @Autowired
    private CmsUserService cus;
+@Autowired
+private CmsCustomerService ccs;
 
     @Override
     public CmsCustomer findByName(String customerName) {
@@ -36,7 +39,7 @@ public class CmsCustomerServiceImpl extends AbstractBaseDao<CmsCustomer, Integer
     @Override
     public void saveCustomer(CmsCustomer customer, CmsUser user) {
         save(customer);
-        user.setId(customer.getCode());
+        user.setId(customer.getEcUserId());
         cus.save(user);
     }
 
@@ -47,4 +50,9 @@ public class CmsCustomerServiceImpl extends AbstractBaseDao<CmsCustomer, Integer
         //然后再删除Customer表中的数据
         delete(id);
     }
+    public List findAll(){
+        List<CmsCustomer> customerList =ccs.findAll();
+        return  customerList;
+    }
+
 }

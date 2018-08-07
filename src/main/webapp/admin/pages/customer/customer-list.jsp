@@ -40,7 +40,7 @@
             <a href="#">用户管理</a> -&gt; <a href="#">会员管理</a> -&gt; <span>添加</span>
         </div>
         <div class="action">
-            <a href="member/v_add.do" class="btn" target="_self">添加</a>
+            <a href="customer/add" class="btn" target="_self">添加</a>
         </div>
     </div>
     <div class="mod">
@@ -51,11 +51,13 @@
                     <th width="30">
                         <input type="checkbox" name="ck_all" id="ck_all" onclick="Pony.checkboxSlt('ck',this.checked);"/>
                     </th>
-                    <th>ID</th>
-                    <th>员工姓名</th>
-                    <th>电子邮箱</th>
-                    <th>工作组</th>
-                    <th width="340">操作选项</th>
+                    <th>客户id</th>
+                    <th>负责销售</th>
+                    <th>客户姓名</th>
+                    <th>客户地址</th>
+                    <th>客户邮箱</th>
+                    <th>客户手机</th>
+                    <th width="140">操作选项</th>
                 </tr>
                 </thead>
                 <tbody>
@@ -73,17 +75,9 @@
                     <td>${flag.username}</td>
                     <td>${flag.email}</td>
                     <td>${flag.userGroup.name}</td>
+                    <td>${flag.lastLoginTime}</td>
+                    <td>${flag.loginCount}</td>
                     <td>
-                        <div style="text-align:center;height:auto;" class="datagrid-cell datagrid-cell-c1-opration">
-                            <a class="btn" href="/member/beforeEdit.do">编辑</a>
-                            <a class="btn" onclick="">负责客户</a>
-                            <a class="btn" onclick="">客户拜访</a>
-                            <a class="btn" onclick="">工时</a>
-                            <c:if test="${flag.group_id eq 3}">
-                                <a class="btn" onclick="">日报</a>
-                                <a class="btn" onclick="">周报</a>
-                            </c:if>
-                        </div>
                         <a class="btn" href="member/v_update.do?id=${flag.id}">修改</a>
                         <a href="javascript:;" class="btn" onclick="optDelete(${flag.id});">删除</a>
                     </td>

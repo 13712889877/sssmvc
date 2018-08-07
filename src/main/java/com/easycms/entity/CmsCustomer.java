@@ -5,7 +5,7 @@ package com.easycms.entity;
  */
 public class CmsCustomer {
     private Integer customerId;
-    private Integer code;
+    private Integer ecUserId;
     private String customerName;
     private String customerAddress;
     private String customerEmail;
@@ -20,12 +20,12 @@ public class CmsCustomer {
         this.customerId = customerId;
     }
 
-    public Integer getCode() {
-        return code;
+    public Integer getEcUserId() {
+        return ecUserId;
     }
 
-    public void setCode(Integer code) {
-        this.code = code;
+    public void setEcUserId(Integer ecUserId) {
+        this.ecUserId = ecUserId;
     }
 
     public String getCustomerName() {

@@ -94,25 +94,20 @@
                       <li>
                         <a href="javascript:;" data-url="<%=basePath%>member/u_list.do">
                           <i class="icon icon-circle"></i>
-                          <span class="txt">内部员工管理</span>
-                        </a>
-                      </li>
-                      <li>
-                        <a href="javascript:;" data-url="内容类型.html">
-                          <i class="icon icon-circle"></i>
                           <span class="txt">销售管理</span>
                         </a>
                       </li>
-                      <li>
+
+                   <%--   <li>
                         <a href="javascript:;" data-url="专题管理.html">
                           <i class="icon icon-circle"></i>
                           <span class="txt">销售客户管理</span>
                         </a>
-                      </li>
+                      </li>--%>
                       <li>
-                        <a href="javascript:;" data-url="<%=basePath%>member/add.do">
+                        <a href="javascript:;" data-url="<%=basePath%>customer/list">
                           <i class="icon icon-circle"></i>
-                          <span class="txt">添加客户</span>
+                          <span class="txt">客户管理</span>
                         </a>
                       </li>
                     </ul>

@@ -4,6 +4,8 @@ import com.easycms.base.BaseDao;
 import com.easycms.entity.CmsCustomer;
 import com.easycms.entity.CmsUser;
 
+import java.util.List;
+
 /**
  * Created by IYFT on 2018/8/3.
  */
@@ -32,6 +34,12 @@ public interface CmsCustomerService extends BaseDao<CmsCustomer, Integer> {
      * @param id
      */
     public void deleteById(Integer customerId,Integer id);
+
+    /**
+     * 查询所有数据
+     */
+   public List findAll();
+
 
 }
 

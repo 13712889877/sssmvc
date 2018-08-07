@@ -18,7 +18,9 @@ import org.springframework.web.bind.annotation.RequestMethod;
 import javax.annotation.Resource;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpSession;
+import java.util.HashMap;
 import java.util.List;
+import java.util.Map;
 
 @Controller
 @RequestMapping("/member")
@@ -33,7 +35,7 @@ public class CmsUserController {
     private CmsUserExtService ues;
     @Resource(name = "cmsLogServiceImpl")
     private CmsLogService ls;
-    @Resource(name="cmsCustomerServiceImpl")
+    @Resource(name = "cmsCustomerServiceImpl")
     private CmsCustomerService ccs;
 
     // 分页显示列表
@@ -225,20 +227,36 @@ public class CmsUserController {
         model.addAttribute("userPager", userPager);
         return "user/userList";
     }
-@RequestMapping("/edit.do")
-    public String edit(HttpServletRequest req,ModelMap model) {
-    int pageSize = 10;
-    int pageNo = 0;
-    String sPageNo = req.getParameter("pager.offset");
-    if (sPageNo != null) {
-        pageNo = Integer.parseInt(sPageNo);
+
+    @RequestMapping("/edit.do")
+    public String edit(HttpServletRequest req, ModelMap model) {
+        int pageSize = 10;
+        int pageNo = 0;
+        String sPageNo = req.getParameter("pager.offset");
+        if (sPageNo != null) {
+            pageNo = Integer.parseInt(sPageNo);
+        }
+        Pager<CmsCustomer> customerPager = ccs.findByPage(pageNo, pageSize);
+        model.addAttribute("customerPager", customerPager);
+        return "customer/customer-list";
     }
-    Pager<CmsCustomer> customerPager = ccs.findByPage(pageNo, pageSize);
-    model.addAttribute("customerPager", customerPager);
-    return "user/showUser";
-}
-@RequestMapping("/add.do")
-    public String add(HttpServletRequest req,ModelMap model){
+        @RequestMapping("/beforeEdit.do")
+        public String beforeEdit(HttpServletRequest req, ModelMap model){
+        List<CmsUser>  userList =us.findAll();
+       /* Map<Integer,String> map=new HashMap<>();
+
+        for(CmsUser user : userList){
+            map.put(user.getId(),user.getUsername());
+        }*/
+
+        model.addAttribute("userList",userList);
+        return "function/userEdit";
+
+        }
+
+
+    @RequestMapping("/add.do")
+    public String add(HttpServletRequest req, ModelMap model) {
         return "function/customerAdd";
-}
+    }
 }
