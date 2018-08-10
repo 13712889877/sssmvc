@@ -2,8 +2,11 @@ package com.easycms.service.impl;
 
 import com.easycms.base.AbstractBaseDao;
 import com.easycms.entity.CmsCustomer;
+import com.easycms.entity.CmsCustomerExt;
 import com.easycms.entity.CmsUser;
+import com.easycms.service.CmsCustomerExtService;
 import com.easycms.service.CmsCustomerService;
+import com.easycms.service.CmsUserExtService;
 import com.easycms.service.CmsUserService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Qualifier;
@@ -22,10 +25,6 @@ import java.util.Map;
 @Service
 public class CmsCustomerServiceImpl extends AbstractBaseDao<CmsCustomer, Integer> implements CmsCustomerService {
 
-   @Autowired
-   private CmsUserService cus;
-@Autowired
-private CmsCustomerService ccs;
 
     @Override
     public CmsCustomer findByName(String customerName) {
@@ -37,22 +36,31 @@ private CmsCustomerService ccs;
 
 
     @Override
-    public void saveCustomer(CmsCustomer customer, CmsUser user) {
+    public void saveCustomer(CmsCustomer customer) {
         save(customer);
-        user.setId(customer.getEcUserId());
-        cus.save(user);
+
     }
 
     @Override
-    public void deleteById(Integer customerId, Integer id) {
+    public void deleteById(Integer customerId) {
         //先删除关联外键的User表中的数据
-        cus.delete(customerId);
+        delete(customerId);
         //然后再删除Customer表中的数据
-        delete(id);
+        delete(customerId);
     }
-    public List findAll(){
-        List<CmsCustomer> customerList =ccs.findAll();
-        return  customerList;
-    }
+@Override
+    public List<CmsCustomer> findAllCustomer() {
 
+        List<CmsCustomer> cmsList = super.findAll();
+
+        return cmsList;
+    }
+@Override
+    public void deleteIn(List<String> list) {
+        super.deleteIn(list);
+    }
+@Override
+     public void save(CmsCustomer customer){
+        super.save(customer);
+    }
 }

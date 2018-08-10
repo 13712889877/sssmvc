@@ -1,21 +1,22 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
         "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
-  <mapper namespace="com.easycms.entity.CmsCustomer">
+<mapper namespace="com.easycms.entity.CmsCustomer">
     <!-- 插入操作 -->
     <insert id="add" parameterType="customer">
         <selectKey resultType="java.lang.Integer" order="AFTER" keyProperty="customerId">
             SELECT LAST_INSERT_ID()
         </selectKey>
-        insert into ec_customer(ec_user_id,customer_name,customer_address,customer_email,customer_tel,customer_type) values(#{ecUserId},#{customerName},#{customerAddress},#{customerEmail},#{customerTel},#{customerType})
+        insert into ec_customer(ec_user_id,customer_name,customer_address,customer_email,customer_tel,customer_type)
+        values(#{ecUserId},#{customerName},#{customerAddress},#{customerEmail},#{customerTel},#{customerType})
     </insert>
     <!-- 删除操作 -->
     <delete id="delete" parameterType="int">
-        delete from ec_customer where customerId=#{customerId}
+        delete from ec_customer where customer_id=#{customerId}
     </delete>
     <!-- 批量删除 -->
     <delete id="deleteIn" parameterType="java.util.List">
-        delete from ec_customer where coustomerId in
+        delete from ec_customer where customer_id in
         <foreach item="item" index="index" collection="list" open="(" separator="," close=")">
             ${item}
         </foreach>
@@ -31,7 +32,7 @@
         from
         ec_customer c, ec_user u
         where
-       c.customer_id=#{customerId} and c.ec_user-id=u.id
+       c.customer_id=#{customerId} and c.ec_user_id=u.id
     </select>
     <resultMap type="customer" id="customerMap">
         <id property="customerId" column="customer_id"/>
@@ -41,22 +42,16 @@
         <result property="customerEmail" column="customer_email"/>
         <result property="customerTel" column="customer_tel"/>
         <result property="customerType" column="customer_type"/>
-        <association property="customerGroup" resultMap="com.easycms.entity.CmsCustomerGroup.groupMap"></association>
     </resultMap>
 
-    <resultMap type="customer" id="msgCustomerMap">
-        <id property="customerId" column="customer_id"/>
-        <result property="customerName" column="customer_name"/>
-    </resultMap>
 
     <!-- 查询全部 -->
     <select id="findAll" resultMap="customerMap">
-        select
-        c.customer_id,c.ec_user_id,c.customer_name,c.customer_address,c.customer_email,c.customer_tel,c.customer_type
-        from
-        ec_customer c, ec_user u
-        where
-       c.ec_user_id=u.id
+      select
+      c.*,u.username
+      from ec_customer c
+      left join ec_user u
+      on c.ec_user_id = u.id;
     </select>
     <!-- 分页查询 -->
     <select id="findByPage" resultMap="customerMap" parameterType="map">

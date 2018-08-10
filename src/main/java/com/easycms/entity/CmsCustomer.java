@@ -6,11 +6,20 @@ package com.easycms.entity;
 public class CmsCustomer {
     private Integer customerId;
     private Integer ecUserId;
+    private String username;
     private String customerName;
     private String customerAddress;
     private String customerEmail;
     private Integer customerTel;
     private String customerType;
+
+    public String getUsername() {
+        return username;
+    }
+
+    public void setUsername(String username) {
+        this.username = username;
+    }
 
     public Integer getCustomerId() {
         return customerId;

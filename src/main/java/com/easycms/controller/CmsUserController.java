@@ -18,9 +18,7 @@ import org.springframework.web.bind.annotation.RequestMethod;
 import javax.annotation.Resource;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpSession;
-import java.util.HashMap;
 import java.util.List;
-import java.util.Map;
 
 @Controller
 @RequestMapping("/member")
@@ -111,6 +109,12 @@ public class CmsUserController {
     }
 
     //登陆
+    @RequestMapping("/index")
+    public String index() {
+        return "index";
+    }
+
+    //登陆
     @RequestMapping("/login.do")
     public String login(HttpServletRequest req, ModelMap model, CmsUser user, String verifyCode) {
         String captcha = CaptchaServlet.getStoredCaptchaString(req);
@@ -124,7 +128,7 @@ public class CmsUserController {
                         HttpSession session = req.getSession();
                         session.setAttribute("user", cu);
                         ls.loginSucssessLog(req, "登录成功！");
-                        return "index";
+                        return "redirect:/member/index";
                     } else {
                         ls.loginFailureLog(req, "登录失败！", "登录密码：" + user.getUsername() + "用户名：" + user.getPassword());
                         return "login";
@@ -240,19 +244,20 @@ public class CmsUserController {
         model.addAttribute("customerPager", customerPager);
         return "customer/customer-list";
     }
-        @RequestMapping("/beforeEdit.do")
-        public String beforeEdit(HttpServletRequest req, ModelMap model){
-        List<CmsUser>  userList =us.findAll();
+
+    @RequestMapping("/beforeEdit.do")
+    public String beforeEdit(ModelMap model) {
+        List<CmsUser> userList = us.findAll();
        /* Map<Integer,String> map=new HashMap<>();
 
         for(CmsUser user : userList){
             map.put(user.getId(),user.getUsername());
         }*/
 
-        model.addAttribute("userList",userList);
-        return "function/userEdit";
+        model.addAttribute("userList", userList);
+        return "customer/customer-add";
 
-        }
+    }
 
 
     @RequestMapping("/add.do")

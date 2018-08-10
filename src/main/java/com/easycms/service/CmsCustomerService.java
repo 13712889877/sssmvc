@@ -2,6 +2,7 @@ package com.easycms.service;
 
 import com.easycms.base.BaseDao;
 import com.easycms.entity.CmsCustomer;
+import com.easycms.entity.CmsCustomerExt;
 import com.easycms.entity.CmsUser;
 
 import java.util.List;
@@ -23,23 +24,23 @@ public interface CmsCustomerService extends BaseDao<CmsCustomer, Integer> {
      * 保存用户信息的同时也要保存用户扩展信息
      *
      * @param customer
-     * @param user
      */
-    public void saveCustomer(CmsCustomer customer, CmsUser user);
+    public void saveCustomer(CmsCustomer customer);
 
     /**
      * 删除Customer数据的同时也要把User数据也删除
      *
      * @param customerId
-     * @param id
      */
-    public void deleteById(Integer customerId,Integer id);
+    public void deleteById(Integer customerId);
 
     /**
      * 查询所有数据
      */
-   public List findAll();
+   public List<CmsCustomer> findAllCustomer();
 
+   public void deleteIn(List<String> list);
+  public void save(CmsCustomer customer);
 
 }
 
