@@ -1,6 +1,7 @@
 package com.easycms.service;
 
 import com.easycms.base.BaseDao;
+import com.easycms.common.Pager;
 import com.easycms.entity.CmsCustomer;
 import com.easycms.entity.CmsCustomerExt;
 import com.easycms.entity.CmsUser;
@@ -41,6 +42,8 @@ public interface CmsCustomerService extends BaseDao<CmsCustomer, Integer> {
 
    public void deleteIn(List<String> list);
   public void save(CmsCustomer customer);
-
+  public Pager<CmsCustomer>  findByPage(int pageNo,int pageSize);
+  public int findTotal(Integer ecUserId);
+  public Pager<CmsCustomer>  salesSelect(int pageNo,int pageSize,int ecUserId);
 }
 

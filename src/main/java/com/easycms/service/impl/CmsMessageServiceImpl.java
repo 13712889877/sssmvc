@@ -24,4 +24,8 @@ public class CmsMessageServiceImpl extends AbstractBaseDao<CmsMessage, Integer> 
         return findByKey(maps, operate);
     }
 
+    @Override
+    public Pager<CmsMessage> salesSelect(int showPages, int pageSize, int ecUserId) {
+        return null;
+    }
 }

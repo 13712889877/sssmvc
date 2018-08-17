@@ -3,14 +3,20 @@ package com.easycms.common;
 import java.util.List;
 
 public class Pager<T> {
+
     //总记录数
     private int total;
-    /*//每页显示的记录数
+
+
+
+    //总页数
+    private int totalPage;
+
+    //每页显示的记录数
     private int pegeSize;
-    //要显示的号码数
-    private int showPages;
-    //当前分页的样式类
-    private String currentPageStyle;*/
+    //当前页
+    private int page;
+
     //每页显示的具体内容
     private List<T> pageList;
 
@@ -22,29 +28,34 @@ public class Pager<T> {
         this.total = total;
     }
 
-    /*public int getPegeSize() {
+    public int getPegeSize() {
         return pegeSize;
     }
     public void setPegeSize(int pegeSize) {
         this.pegeSize = pegeSize;
     }
-    public int getShowPages() {
-        return showPages;
-    }
-    public void setShowPages(int showPages) {
-        this.showPages = showPages;
-    }
-    public String getCurrentPageStyle() {
-        return currentPageStyle;
-    }
-    public void setCurrentPageStyle(String currentPageStyle) {
-        this.currentPageStyle = currentPageStyle;
-    }*/
+
     public List<T> getPageList() {
         return pageList;
     }
 
     public void setPageList(List<T> pageList) {
         this.pageList = pageList;
+    }
+
+    public int getTotalPage() {
+        return totalPage;
+    }
+
+    public void setTotalPage(int totalPage) {
+        this.totalPage = totalPage;
+    }
+
+    public int getPage() {
+        return page;
+    }
+
+    public void setPage(int page) {
+        this.page = page;
     }
 }

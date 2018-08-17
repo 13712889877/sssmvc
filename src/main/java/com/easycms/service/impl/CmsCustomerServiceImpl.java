@@ -1,6 +1,7 @@
 package com.easycms.service.impl;
 
 import com.easycms.base.AbstractBaseDao;
+import com.easycms.common.Pager;
 import com.easycms.entity.CmsCustomer;
 import com.easycms.entity.CmsCustomerExt;
 import com.easycms.entity.CmsUser;
@@ -37,7 +38,7 @@ public class CmsCustomerServiceImpl extends AbstractBaseDao<CmsCustomer, Integer
 
     @Override
     public void saveCustomer(CmsCustomer customer) {
-        save(customer);
+        super.save(customer);
 
     }
 
@@ -48,19 +49,43 @@ public class CmsCustomerServiceImpl extends AbstractBaseDao<CmsCustomer, Integer
         //然后再删除Customer表中的数据
         delete(customerId);
     }
-@Override
+
+    @Override
     public List<CmsCustomer> findAllCustomer() {
 
         List<CmsCustomer> cmsList = super.findAll();
 
         return cmsList;
     }
-@Override
+
+    @Override
     public void deleteIn(List<String> list) {
         super.deleteIn(list);
     }
-@Override
-     public void save(CmsCustomer customer){
+
+    @Override
+    public void save(CmsCustomer customer) {
         super.save(customer);
+    }
+
+    @Override
+    public Pager<CmsCustomer> findByPage(int pageNo, int pageSize) {
+        Pager<CmsCustomer> customerPager = super.findByPage(pageNo, pageSize);
+        return customerPager;
+    }
+
+    @Override
+    public Pager<CmsCustomer> salesSelect(int showPages, int pageSize, int ecUserId) {
+
+        Pager<CmsCustomer> customerPagers = super.salesSelect(showPages,pageSize,ecUserId);
+            return customerPagers;
+
+    }
+
+
+    @Override
+    public int findTotal(Integer saleUserId) {
+        Integer total = super.findTotal();
+        return total;
     }
 }

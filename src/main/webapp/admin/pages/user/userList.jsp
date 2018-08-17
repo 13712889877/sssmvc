@@ -38,6 +38,7 @@
     <div class="toolbar">
         <div class="crumbs">
             <a href="#">用户管理</a> -&gt; <a href="#">会员管理</a> -&gt; <span>添加</span>
+            <a style="text-align:right">欢迎您，${sessionScope.user.username}</a>
         </div>
         <div class="action">
             <a href="member/v_add.do" class="btn" target="_self">添加</a>

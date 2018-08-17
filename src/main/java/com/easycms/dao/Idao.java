@@ -118,4 +118,9 @@ public interface Idao<T, PK extends Serializable> {
      * @return
      */
     public T login(T entity);
+
+
+    public int findTotal(Class<T> entityClass);
+    public Pager<T> salesSelect(Class<T> entityClass, int showPages, int pageSize,Integer ecUserId);
+    public Pager<T> salesSelect(Class<T> entityClass,int showPages,int pageSize,Integer ecUserId,Object key);
 }

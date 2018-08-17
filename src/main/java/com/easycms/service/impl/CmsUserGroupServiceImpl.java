@@ -1,5 +1,6 @@
 package com.easycms.service.impl;
 
+import com.easycms.common.Pager;
 import org.springframework.stereotype.Service;
 
 import com.easycms.base.AbstractBaseDao;
@@ -16,4 +17,14 @@ public class CmsUserGroupServiceImpl extends AbstractBaseDao<CmsUserGroup, Integ
         updateOrder(cug);
     }
 
+    @Override
+    public int findTotal() {
+        Integer total=super.findTotal();
+        return total;
+    }
+
+    @Override
+    public Pager<CmsUserGroup> salesSelect(int showPages, int pageSize, int ecUserId) {
+        return null;
+    }
 }

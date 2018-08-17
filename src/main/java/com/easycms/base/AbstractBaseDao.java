@@ -48,6 +48,10 @@ public abstract class AbstractBaseDao<T, PK extends Serializable> implements Bas
     public Pager<T> findByPage(int showPages, int pageSize) {
         return idao.findByPage(entityClass, showPages, pageSize);
     }
+    public Pager<T> salesSelect(int showPages,int pageSize,int ecUserId){
+        return idao.salesSelect(entityClass,showPages,pageSize,ecUserId);
+    }
+
 
     public Pager<T> findByKey(Map<String, Object> maps, String operate) {
         return idao.findByKey(entityClass, maps, operate);
@@ -72,5 +76,10 @@ public abstract class AbstractBaseDao<T, PK extends Serializable> implements Bas
 
     public T login(T entity) {
         return idao.login(entity);
+    }
+
+    public int findTotal(){
+
+            return idao.findTotal(entityClass);
     }
 }

@@ -2,13 +2,13 @@ package com.easycms.dao;
 
 import com.easycms.common.Pager;
 import org.mybatis.spring.support.SqlSessionDaoSupport;
+import org.omg.PortableInterceptor.INACTIVE;
 import org.springframework.stereotype.Service;
 
 import java.io.Serializable;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
-
 
 
 @Service
@@ -44,8 +44,29 @@ public class IdaoImpl<T, PK extends Serializable> extends SqlSessionDaoSupport i
     }
 
     @Override
+    public Pager<T> salesSelect(Class<T> entityClass, int showPages, int pageSize, Integer ecUserId){
+        return salesSelect(entityClass,showPages,pageSize,ecUserId,null);
+    }
+    @Override
     public Pager<T> findByPage(Class<T> entityClass, int showPages, int pageSize) {
         return findByPage(entityClass, showPages, pageSize, null);
+    }
+    @Override
+    public Pager<T> salesSelect(Class<T> entityClass, int showPages, int pageSize, Integer ecUserId,Object key) {
+        Pager<T> pager = new Pager<T>();
+        Map<String,Object> maps = new HashMap<String,Object>();
+        maps.put("showPages",showPages);
+        maps.put("pageSize",pageSize);
+        maps.put("ecUserId",ecUserId);
+        if(key!=null){
+            maps.put("category",key);
+        }
+        List<T> pageList=getSqlSession().selectList(entityClass.getName()+".salesSelect",maps);
+        int total = getTotalNum(entityClass,key);
+        pager.setPageList(pageList);
+        pager.setTotal(total);
+        return pager;
+
     }
 
     @Override
@@ -90,6 +111,11 @@ public class IdaoImpl<T, PK extends Serializable> extends SqlSessionDaoSupport i
         return getSqlSession().selectOne(entity.getClass().getName() + ".login", entity);
     }
 
+    @Override
+    public int findTotal(Class<T> entityClass) {
+        return getSqlSession().selectOne(entityClass.getName() + ".findTotal");
+    }
+
     //多条件查询 得到集合
     @Override
     public Pager<T> findByKey(Class<T> entityClass, Map<String, Object> maps,
@@ -102,7 +128,6 @@ public class IdaoImpl<T, PK extends Serializable> extends SqlSessionDaoSupport i
         pager.setTotal(totalNum);
         return pager;
     }
-
     //多条件的查询 得到总和
     private int getTotal(Class<T> entityClass, Map<String, Object> maps,
                          String operate) {
@@ -118,5 +143,6 @@ public class IdaoImpl<T, PK extends Serializable> extends SqlSessionDaoSupport i
         count = getSqlSession().selectOne(entityClass.getName() + operate, maps);
         return count;
     }
+
 
 }

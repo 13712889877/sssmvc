@@ -25,4 +25,8 @@ public class CmsReMessageServiceImpl extends AbstractBaseDao<CmsReceiverMessage,
         return findByKey(maps, operate);
     }
 
+    @Override
+    public Pager<CmsReceiverMessage> salesSelect(int showPages, int pageSize, int ecUserId) {
+        return null;
+    }
 }

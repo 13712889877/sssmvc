@@ -1,5 +1,6 @@
 package com.easycms.service.impl;
 
+import com.easycms.common.Pager;
 import com.easycms.entity.CmsCustomerExt;
 import com.easycms.service.CmsCustomerService;
 import org.springframework.stereotype.Service;
@@ -13,4 +14,8 @@ import com.easycms.service.CmsUserExtService;
 @Transactional
 public class CmsUserExtServiceImpl extends AbstractBaseDao<CmsUserExt, Integer> implements CmsUserExtService {
 
+    @Override
+    public Pager<CmsUserExt> salesSelect(int showPages, int pageSize, int ecUserId) {
+        return null;
+    }
 }

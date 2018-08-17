@@ -23,6 +23,7 @@
     <div class="toolbar">
         <div class="crumbs">
             <a href="#">用户管理</a> -&gt; <a href="#">会员管理</a> -&gt; <span>添加</span>
+            <a style="text-align:right">欢迎您，${sessionScope.user.username}</a>
         </div>
         <div class="action">
             <a href="<%=basePath%>customer/list" class="btn" target="_self">返回列表</a>
@@ -30,7 +31,7 @@
     </div>
     <div class="mod">
         <div class="bd">
-            <form action="/customer/edit?id=${customer.customerId}" method="post">
+            <form action="/customer/edit" method="post">
                 <table class="ui-table">
                     <tbody>
                     <tr>
@@ -48,7 +49,15 @@
                             <select id="ec_user_id" name="ecUserId">
                                 <option value="">=请选择销售=</option>
                                 <c:forEach items="${userList}" var="user">
-                                    <option value="${user.id}">${user.username}</option>
+                                   <c:choose>
+                                    <c:when test="${customer.ecUserId eq user.id}">
+                                        <option value="${user.id}" selected="selected">${user.username}</option>
+                                    </c:when>
+                                       <c:otherwise >
+                                           <option value="${user.id}">${user.username}</option>
+                                       </c:otherwise>
+                                   </c:choose>
+
                                 </c:forEach>
                             </select>
                         </td>

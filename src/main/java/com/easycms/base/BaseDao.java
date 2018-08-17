@@ -111,4 +111,7 @@ public interface BaseDao<T, PK extends Serializable> {
      * @return
      */
     public T login(T entity);
+    public int findTotal();
+
+    public Pager<T> salesSelect(int showPages, int pageSize,int ecUserId);
 }

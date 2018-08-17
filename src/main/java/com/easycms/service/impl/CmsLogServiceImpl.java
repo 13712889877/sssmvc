@@ -88,4 +88,8 @@ public class CmsLogServiceImpl extends AbstractBaseDao<CmsLog, Integer> implemen
 
     }
 
+    @Override
+    public Pager<CmsLog> salesSelect(int showPages, int pageSize, int ecUserId) {
+        return null;
+    }
 }

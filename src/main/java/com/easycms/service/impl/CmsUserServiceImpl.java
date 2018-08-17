@@ -4,6 +4,7 @@ import java.util.HashMap;
 import java.util.Map;
 import javax.annotation.Resource;
 
+import com.easycms.common.Pager;
 import org.springframework.stereotype.Service;
 import com.easycms.base.AbstractBaseDao;
 import com.easycms.entity.CmsUser;
@@ -38,5 +39,10 @@ public class CmsUserServiceImpl extends AbstractBaseDao<CmsUser, Integer> implem
         ues.delete(id);
         //然后再删除user表中的数据
         delete(id);
+    }
+
+    @Override
+    public Pager<CmsUser> salesSelect(int showPages, int pageSize, int ecUserId) {
+        return null;
     }
 }

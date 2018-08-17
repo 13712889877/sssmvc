@@ -115,6 +115,12 @@ public class CmsUserController {
     }
 
     //登陆
+    @RequestMapping("/beforeLogin")
+    public String beforeLogin() {
+        return "login";
+    }
+
+    //登陆
     @RequestMapping("/login.do")
     public String login(HttpServletRequest req, ModelMap model, CmsUser user, String verifyCode) {
         String captcha = CaptchaServlet.getStoredCaptchaString(req);

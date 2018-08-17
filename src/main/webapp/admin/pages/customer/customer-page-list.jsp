@@ -1,6 +1,6 @@
 <%@ page language="java" pageEncoding="UTF-8" %>
 <%@ taglib uri="http://java.sun.com/jsp/jstl/core" prefix="c" %>
-<%@ taglib uri="http://jsptags.com/tags/navigation/pager" prefix="pg" %>
+
 <%
     String path = request.getContextPath();
     String basePath = request.getScheme() + "://"
@@ -52,7 +52,7 @@
             <a style="text-align:right">欢迎您，${sessionScope.user.username}</a>
         </div>
         <div class="action">
-            <form action="/customer/salesSelect?id=${customer.ecUserId}" method="post">
+            <form action="/customer/salesSelect" method="post">
                 <select id="ec_user_id" name="ecUserId" class="btn">
                     <option value="">=请选择销售查询=</option>
                     <c:forEach items="${userList}" var="user">
@@ -61,7 +61,7 @@
                 </select>
                 <button type="submit" class="btn" name="button1" id="button1">查询</button>
             </form>
-            <a href="customer/beforeSave" class="btn" target="_self">添加</a>
+            <a href="customer/beforeEdit?id=${pg.customerId}" class="btn" target="_self">添加</a>
             <a href="javascript:;" class="btn" onclick="optDeleteIn();">批量删除</a>
         </div>
     </div>
@@ -84,7 +84,7 @@
                 </tr>
                 </thead>
                 <tbody>
-                <c:forEach var="customer" items="${customerList}" varStatus="status">
+                <c:forEach var="pg" items="${customerPager.pageList}" varStatus="status">
                     <c:choose>
                         <c:when test="${status.index % 2 ==0 }">
                             <tr>
@@ -93,15 +93,15 @@
                             <tr class="even">
                         </c:otherwise>
                     </c:choose>
-                    <td class="tc"><input type='checkbox' name='ck' value='${customer.customerId}'/></td>
-                    <td>${customer.username}</td>
-                    <td>${customer.customerName}</td>
-                    <td>${customer.customerAddress}</td>
-                    <td>${customer.customerEmail}</td>
-                    <td>${customer.customerTel}</td>
+                    <td class="tc"><input type='checkbox' name='ck' value='${pg.customerId}'/></td>
+                    <td>${pg.username}</td>
+                    <td>${pg.customerName}</td>
+                    <td>${pg.customerAddress}</td>
+                    <td>${pg.customerEmail}</td>
+                    <td>${pg.customerTel}</td>
                     <td>
-                        <a class="btn" href="customer/beforeEdit?id=${customer.customerId}">修改</a>
-                        <a href="javascript:;" class="btn" onclick="optDelete(${customer.customerId});">删除</a>
+                        <a class="btn" href="customer/beforeEdit?id=${pg.customerId}">修改</a>
+                        <a href="javascript:;" class="btn" onclick="optDelete(${pg.customerId});">删除</a>
                     </td>
                     </tr>
                 </c:forEach>
@@ -109,44 +109,28 @@
             </table>
         </div>
         <!-- /.mod-bd -->
-        <div class="ft">
-            <pg:pager items="${userPager.total}" maxPageItems="10" maxIndexPages="10" url="member/v_list.do"
-                      export="currentPageNo = pageNumber">
-                <pg:index export="totalItems = itemCount">
-                    <div class="pager">
-                        <pg:page export="firstItem, lastItem">
-                            <span class="info">共${totalItems}条/${firstItem}-${lastItem}页</span>
-                        </pg:page>
-                        <pg:first>
-                            <a class="start" href="${pageUrl}">首页</a>
-                        </pg:first>
-                        <pg:prev>
-                            <a class="prev" href="${pageUrl}">上一页</a>
-                        </pg:prev>
-                        <pg:pages>
-                            <c:choose>
-                                <c:when test="${currentPageNo eq pageNumber}">
-                                    <span class="page current">${pageNumber}</span>
-                                </c:when>
-                                <c:otherwise>
-                                    <a class="page" href="${pageUrl}">${pageNumber}</a>
-                                </c:otherwise>
-                            </c:choose>
-                        </pg:pages>
-                        <pg:next>
-                            <a class="next" href="${pageUrl}">下一页</a>
-                        </pg:next>
-                        <pg:last>
-                            <a class="end" href="${pageUrl}">末页</a>
-                        </pg:last>
-                    </div>
-                    <!-- /.pager -->
-                </pg:index>
-            </pg:pager>
-        </div>
+
         <!-- /.mod-ft -->
     </div>
     <!-- /.mod -->
+</div>
+
+<div class="page">
+
+    <div>记录总数<span class="">${customerPager.total}</span> | 页数<span class="">${customerPager.totalPage}</span></div>
+    <a class="btn" href="customer/list?pages=${customerPager.page-1}">上一页</a>
+    <c:forEach var="s"  begin="1" end="${customerPager.totalPage}">
+        <c:choose>
+        <c:when test="${customerPager.page eq s}">
+            <a class="btn" style="color: #C9282D">${s}</a>
+        </c:when>
+        <c:otherwise>
+            <a href="customer/list?page=${s}" class="btn">${s}</a>
+        </c:otherwise>
+        </c:choose>
+    </c:forEach>
+    <div>当前页数：<span >${customerPager.page}</span></div>
+    <a class="btn" href="customer/list?pages=${customerPager.page+1}">下一页</a>
 </div>
 <!-- /.container  -->
 </body>

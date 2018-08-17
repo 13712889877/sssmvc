@@ -52,15 +52,15 @@
       from ec_customer c
       left join ec_user u
       on c.ec_user_id = u.id;
+
     </select>
     <!-- 分页查询 -->
     <select id="findByPage" resultMap="customerMap" parameterType="map">
-      select
-        c.customer_id,c.ec_user_id,c.customer_name,c.customer_address,c.customer_email,c.customer_tel,c.customer_type
-        from
-        ec_customer c, ec_user u
-        where
-       c.ec_user_id=u.id
+       select
+      c.*,u.username
+      from ec_customer c
+      left join ec_user u
+      on c.ec_user_id = u.id
         order by
         customer_id desc
         limit
@@ -73,5 +73,12 @@
     <!-- 根据用户名获得对象 -->
     <select id="findByName" resultType="customer" parameterType="customer">
         select * from ec_customer where customer_name=#{customerName}
+    </select>
+    <select id="salesSelect" resultMap="customerMap" parameterType="map">
+    select
+   SELECT * from ec_customer
+   where ec_user_id = #{ecUserId}
+    limit
+    #{showPages},#{pageSize}
     </select>
 </mapper>
